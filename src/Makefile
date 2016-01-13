@@ -12,6 +12,7 @@ ASFLAGS=-felf
 
 all: $(SOURCES) link
 
+
 clean:
 	rm *.o kernel
 
