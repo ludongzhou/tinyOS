@@ -1,5 +1,10 @@
 //
 // Created by 周鲁东 on 16/1/16.
+// 这一部分是gcc的c语言拓展, 可以直接在c中调用汇编代码,并不是c标准中的. 语法就是asm [volatile] ( AssemblerTemplate
+//: OutputOperands
+//[ : InputOperands
+//[ : Clobbers ] ])
+// 这部分还没有仔细看
 //
 
 // common.c -- Defines some global functions.
