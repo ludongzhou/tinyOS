@@ -3,14 +3,14 @@
 # The only one that needs changing is the assembler
 # rule, as we use nasm instead of GNU as.
 
-SOURCES=boot.o kernel_main.o
+SOURCES=boot.o kernel_main.o common.o monitor.o
 
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector
 
 LDFLAGS=-dT Link.ld
 ASFLAGS=-f elf
 
-all: link
+all: $(SOURCES) link
 
 
 clean:
