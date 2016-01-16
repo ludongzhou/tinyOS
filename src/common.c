@@ -13,6 +13,7 @@
 #include "common.h"
 
 // Write a byte out to the specified port.
+// 重新包装了汇编的outb指令, 是指向XX端口发出的XX数据
 void outb(u16int port, u8int value)
 {
     asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));
