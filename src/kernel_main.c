@@ -12,7 +12,7 @@ int kernel_main(struct multiboot *mboot_ptr)
     // Initialise the screen (by clearing it)
     monitor_clear();
     // Write out a sample string
-    monitor_write("Hello, world!");
+    monitor_write("HHello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!ello, world!");
 
     return 0;
 }

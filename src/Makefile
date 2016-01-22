@@ -3,21 +3,22 @@
 # The only one that needs changing is the assembler
 # rule, as we use nasm instead of GNU as.
 
-SOURCES=boot.o kernel_main.o common.o monitor.o
+all: boot.o kernel_main.o link
 
-CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector
+kernel_main.o: common.o monitor.o
+	i686-elf-gcc -c kernel_main.c -o kernel_main.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-LDFLAGS=-dT Link.ld
-ASFLAGS=-f elf
-
-all: $(SOURCES) link
-
+boot.o:
+	nasm -f elf32 boot.s
 
 clean:
-	rm *.o kernel
+	rm *.o *.bin
 
 link:
-	ld $(LDFLAGS) -o kernel $(SOURCES)
+	i686-elf-gcc -T Link.ld -o myos.bin -ffreestanding -O2 -nostdlib boot.o kernel_main.o common.o monitor.o -lgcc
 
-.s.o:
-	nasm $(ASFLAGS) $<
+common.o:
+	i686-elf-gcc -c common.c -o common.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+monitor.o:
+	i686-elf-gcc -c monitor.c -o monitor.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
