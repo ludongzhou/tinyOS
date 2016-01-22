@@ -32,3 +32,23 @@ u16int inw(u16int port)
     asm volatile ("inw %1, %0" : "=a" (ret) : "dN" (port));
     return ret;
 }
+
+void memset()
+{
+    //TODO
+}
+
+void memcpy()
+{
+    //TODO
+}
+
+void strlen()
+{
+    //TODO
+}
+
+void printf()
+{
+    //TODO: refer this:http://read.pudn.com/downloads70/sourcecode/unix_linux/253125/linux-0.1/linux/kernel/vsprintf.c__.htm
+}
