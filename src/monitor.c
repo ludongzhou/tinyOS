@@ -144,23 +144,19 @@ void monitor_write(char *c)
 
 void monitor_write_hex(u32int n)
 {
-    // TODO: implement this yourself!
     const char *digits="0123456789ABCDEF";
     int subans = 0;
     int i;
+    monitor_write("0x");
     for (i = 0; i < 32; i++){
-        if (i % 4 == 3){
-            char temp = digits[subans];
-            monitor_put(temp);
-            subans = 0;
+        subans = subans << 1;
+        if ( n & (1 << (31 - i))){
+            subans++;
         }
-        else{
-            if ( n & (1 << (31 - i))){
-                subans = subans << 1 | 1;
-            }
-            else{
-                subans = subans << 1;
-            }
+        if (i % 4 == 3){
+            if(subans)
+                monitor_put(digits[subans]);
+            subans = 0;
         }
     }
 
@@ -169,20 +165,4 @@ void monitor_write_hex(u32int n)
 void monitor_write_dec(u32int n)
 {
     // TODO: implement this yourself!
-    char temp[20];
-    const char * digits = "0123456789";
-    int i = 0;
-    while(n){
-        int last = n % 10;
-        n = n / 10;
-        char dummy = digits[last];
-        monitor_put(dummy);
-    }
-    /*int j = 0;
-    while(j < i){
-        char dummy = temp[i - j - 1];
-        monitor_write(&dummy);
-        j++;
-    }
-     */
 }

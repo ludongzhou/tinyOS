@@ -15,9 +15,10 @@ int kernel_main(struct multiboot *mboot_ptr)
     monitor_clear();
     // Write out a sample string
     monitor_write("Hello, world!\n");
+    monitor_write_hex((u32int)1);
 
     asm volatile("int $0x3");
     asm volatile("int $0x4");
-
+    asm volatile("int $0x3");
     return 0;
 }
