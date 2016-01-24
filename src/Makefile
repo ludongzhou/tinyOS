@@ -3,22 +3,16 @@
 # The only one that needs changing is the assembler
 # rule, as we use nasm instead of GNU as.
 
-all: boot.o kernel_main.o link
+all: kernel_main.o boot.o descriptor_tables.o gdt.o interrupt.o isr.o monitor.o common.o link
 
-kernel_main.o: common.o monitor.o
-	i686-elf-gcc -c kernel_main.c -o kernel_main.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+.s.o:
+	nasm -f elf32 $<
 
-boot.o:
-	nasm -f elf32 boot.s
+.c.o:
+	i686-elf-gcc -c $< -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+link: common.o boot.o kernel_main.o descriptor_tables.o gdt.o interrupt.o isr.o monitor.o
+	i686-elf-gcc -T Link.ld -o myos.bin -ffreestanding -O2 -nostdlib $^ -lgcc
 
 clean:
 	rm *.o *.bin
-
-link:
-	i686-elf-gcc -T Link.ld -o myos.bin -ffreestanding -O2 -nostdlib boot.o kernel_main.o common.o monitor.o -lgcc
-
-common.o:
-	i686-elf-gcc -c common.c -o common.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-
-monitor.o:
-	i686-elf-gcc -c monitor.c -o monitor.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
