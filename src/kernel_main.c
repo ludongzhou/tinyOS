@@ -2,10 +2,9 @@
 // Created by 周鲁东 on 16/1/13.
 //
 
-// main.c -- Defines the C-code kernel entry point, calls initialisation routines.
-// Made for JamesM's tutorials
 #include "monitor.h"
 #include "descriptor_tables.h"
+#include "timer.h"
 
 int kernel_main(struct multiboot *mboot_ptr)
 {
@@ -15,10 +14,13 @@ int kernel_main(struct multiboot *mboot_ptr)
     monitor_clear();
     // Write out a sample string
     monitor_write("Hello, world!\n");
-    monitor_write_hex((u32int)1);
 
     asm volatile("int $0x3");
     asm volatile("int $0x4");
-    asm volatile("int $0x3");
+
+    asm volatile("sti");
+    init_timer(50);
+
     return 0;
 }
+
